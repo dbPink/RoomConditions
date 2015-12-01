@@ -36,7 +36,6 @@ def colectData():
 		try:
 			value = {
 		        'time': datetime.now().strftime("%H:%M:%S"),
-		        'humidity': random() * 20,
 		        'temperature': random() * 100
 			}
 			with lock:
@@ -51,4 +50,4 @@ def colectData():
 
 if __name__ == '__main__':
 	thread.start_new_thread(colectData, ())
-	app.run(debug=True)
+	app.run(host='0.0.0.0', port=80, debug=True)

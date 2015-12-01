@@ -11,16 +11,6 @@
 			labels : [],
 			datasets : [
 				{
-					label: "Humidity",
-					fillColor : "rgba(220,220,220,0.2)",
-					strokeColor : "rgba(220,220,220,1)",
-					pointColor : "rgba(220,220,220,1)",
-					pointStrokeColor : "#fff",
-					pointHighlightFill : "#fff",
-					pointHighlightStroke : "rgba(220,220,220,1)",
-					data : []
-				},
-				{
 					label: "Temperature",
 					fillColor : "rgba(151,187,205,0.2)",
 					strokeColor : "rgba(151,187,205,1)",
@@ -54,7 +44,7 @@
 				dataType: "json",
 				success: function( conditions ) {
 					$.each( conditions.measures, function( i, condition ) {
-						window.myLine.addData([condition.humidity, condition.temperature], 
+						window.myLine.addData([condition.temperature],
 							condition.time);
 						entry_count++;
 						if (entry_count > max_entries_count) {
