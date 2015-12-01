@@ -5,7 +5,7 @@
 	<script>
 		var last_request = ""
 		var entry_count = 0;
-		var max_entries_count = 40;
+		var max_entries_count = 100;
 		var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 		var lineChartData = {
 			labels : [],
@@ -27,6 +27,7 @@
 		window.onload = function(){
 			var ctx = document.getElementById("canvas").getContext("2d");
 			window.myLine = new Chart(ctx).Line(lineChartData, {
+		                animationSteps: 10,
 				animationEasing: "linear",
 				responsive: true, 
 				bezierCurveTension: 0.15,
@@ -34,7 +35,7 @@
 			    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\">&nbsp&nbsp&nbsp&nbsp</span>&nbsp<%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 			});
 			document.getElementById("legendDiv").innerHTML = window.myLine.generateLegend();
-			setInterval(getData, 3000)
+			setInterval(getData, 300000)
 		}
 
 		getData = function(){

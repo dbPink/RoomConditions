@@ -1,13 +1,13 @@
-#!flask/bin/python
 from flask import Flask, jsonify, send_from_directory
 from random import random
 from time import sleep
 from datetime import datetime
 import thread
 import threading
+from  reader import read_temp
 
 measures = []
-max_size = 40
+max_size = 120
 
 lock = threading.Lock()
 app = Flask(__name__)
@@ -25,7 +25,10 @@ def index(last_time, version):
 		if (last_time):
 			for i in range(len(measures)-1, -1, -1):
 				if (measures[i].get('time') == last_time):
-					return jsonify({'measures' : measures[i:]})
+                                    if (len(measures) <= i + 1):
+                                        return jsonify({'measures' : []})
+                                    else:
+					return jsonify({'measures' : measures[i + 1:]})
 		return jsonify({'measures' : measures})
 
 def colectData():
@@ -36,13 +39,13 @@ def colectData():
 		try:
 			value = {
 		        'time': datetime.now().strftime("%H:%M:%S"),
-		        'temperature': random() * 100
+		        'temperature': read_temp()
 			}
 			with lock:
 				measures.append(value)
 				if (len(measures) > max_size):
 					measures.pop(0)
-			sleep(5)
+			sleep(300)
 
 		except KeyboardInterrupt:
 			break 
